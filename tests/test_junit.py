@@ -97,6 +97,7 @@ def test_results_are_read_only(sample):
     with pytest.raises(AttributeError):
         sample["test_total"].status = "failed"
 
+
 def test_kafka_retry_records_both_attempts():
     # Run the code being tested: parse the real Kafka file
     results = parse_junit(FIXTURES / "kafka_flaky_retry.xml")
@@ -116,6 +117,7 @@ def test_kafka_retry_records_both_attempts():
 
     # The failure message should be the real one from the file
     assert "idle connection" in first.message
+
 
 def test_test_id_without_classname_is_just_the_name(tmp_path):
     # Create a tiny report where the test has NO classname
