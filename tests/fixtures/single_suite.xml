@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Some runners write a single <testsuite> as the root instead of <testsuites>. -->
+<testsuite name="math" tests="2">
+  <testcase classname="math.test_add" name="test_small" time="0.01"/>
+  <testcase classname="math.test_add" name="test_big" time="not-a-number"/>
+</testsuite>

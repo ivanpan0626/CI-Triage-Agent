@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Hand-written fixture: every outcome appears exactly once, so tests know the right answer. -->
+<testsuites>
+  <testsuite name="checkout" tests="4" failures="1" errors="1" skipped="1">
+    <testcase classname="checkout.test_cart" name="test_total" time="0.42"/>
+    <testcase classname="checkout.test_cart" name="test_apply_coupon" time="1.07">
+      <failure message="expected 90.0, got 100.0">AssertionError: expected 90.0, got 100.0</failure>
+    </testcase>
+    <testcase classname="checkout.test_payment" name="test_charge_card" time="5.00">
+      <error>TimeoutError: payment gateway did not respond in 5s</error>
+    </testcase>
+    <testcase classname="checkout.test_payment" name="test_refund">
+      <skipped message="refunds disabled in CI"/>
+    </testcase>
+  </testsuite>
+</testsuites>

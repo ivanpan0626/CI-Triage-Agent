@@ -1,0 +1,42 @@
+# pyproject.toml: the one file that describes this project (like package.json).
+
+[project]
+name = "ci-triage"
+version = "0.1.0"
+description = "Triage CI test failures: detect flaky tests and explain failures."
+readme = "README.md"
+requires-python = ">=3.12"
+license = "MIT"
+authors = [{ name = "Ivan Pan" }]
+# Runtime dependencies: none yet. The parser only uses Python's standard library.
+dependencies = []
+
+[project.optional-dependencies]
+# Dev-only tools (like devDependencies). Pinned so laptop and CI use identical versions.
+dev = [
+    "pytest==9.1.1",
+    "ruff==0.17.1",
+]
+
+[build-system]
+# How pip builds/installs this package.
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+# "My importable code lives in src/" (the src layout).
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# Treat warnings as errors so problems can't hide in CI output.
+filterwarnings = ["error"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+# E/F = core errors + pyflakes (unused imports, undefined names)
+# I = import sorting · B = common bug patterns · UP = modern Python syntax
+select = ["E", "F", "I", "B", "UP"]

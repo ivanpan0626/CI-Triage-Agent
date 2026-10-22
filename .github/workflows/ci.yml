@@ -1,0 +1,48 @@
+# Runs lint + tests on every push to main and every pull request.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# Least privilege: this workflow only needs to read the code.
+permissions:
+  contents: read
+
+# If you push again while CI is still running on the same branch, cancel the old run.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    # Build matrix: run the same job once per Python version, in parallel.
+    # 3.12 = oldest version we support (pyproject: requires-python >=3.12)
+    # 3.14 = what Ivan runs locally, so "works on my machine" == "works in CI".
+    strategy:
+      fail-fast: false  # if one version fails, still finish the others (see all problems at once)
+      matrix:
+        python-version: ["3.12", "3.14"]
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip  # reuse downloaded packages between runs (faster CI)
+
+      - name: Install project + dev tools
+        run: pip install -e ".[dev]"
+
+      - name: Lint
+        run: ruff check .
+
+      - name: Check formatting
+        run: ruff format --check .
+
+      - name: Run tests
+        run: pytest -v
