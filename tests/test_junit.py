@@ -96,3 +96,34 @@ def test_results_are_read_only(sample):
     # frozen=True: parsed results are facts about the past and can't be edited.
     with pytest.raises(AttributeError):
         sample["test_total"].status = "failed"
+
+def test_kafka_retry_records_both_attempts():
+    # Run the code being tested: parse the real Kafka file
+    results = parse_junit(FIXTURES / "kafka_flaky_retry.xml")
+
+    # The file has 2 <testcase> entries, so we expect 2 results
+    assert len(results) == 2
+
+    # Give the two results names so the next lines are easy to read
+    first, second = results
+
+    # Both entries should be the SAME test (that's what makes it a retry)
+    assert first.test_id == second.test_id
+
+    # Attempt 1 failed, attempt 2 passed → this is the flaky pattern
+    assert first.status == "failed"
+    assert second.status == "passed"
+
+    # The failure message should be the real one from the file
+    assert "idle connection" in first.message
+
+def test_test_id_without_classname_is_just_the_name(tmp_path):
+    # Create a tiny report where the test has NO classname
+    report = tmp_path / "report.xml"
+    report.write_text('<testsuite><testcase name="test_login"/></testsuite>')
+
+    # Run the parser on it
+    results = parse_junit(report)
+
+    # With no classname, test_id should be just the name
+    assert results[0].test_id == "test_login"

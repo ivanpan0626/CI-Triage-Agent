@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="org.apache.kafka.common.network.Tls13SelectorTest" tests="2" skipped="0" failures="1" errors="0" timestamp="2026-10-20T21:50:43.856Z" hostname="runnervm8k3b6" time="61.317">
+  <properties/>
+  <testcase name="testCloseOldestConnection()" classname="org.apache.kafka.common.network.Tls13SelectorTest" time="4.112">
+    <failure message="org.opentest4j.AssertionFailedError: The idle connection should have been closed ==&gt; expected: &lt;true&gt; but was: &lt;false&gt;" type="org.opentest4j.AssertionFailedError">org.opentest4j.AssertionFailedError: The idle connection should have been closed ==&gt; expected: &lt;true&gt; but was: &lt;false&gt;
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertTrue.failNotTrue(AssertTrue.java:63)
+	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:36)
+	at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:214)
+	at org.apache.kafka.common.network.SelectorTest.testCloseOldestConnection(SelectorTest.java:461)
+	at org.apache.kafka.common.network.Tls13SelectorTest.testCloseOldestConnection(Tls13SelectorTest.java:54)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+</failure>
+  </testcase>
+  <testcase name="testCloseOldestConnection()" classname="org.apache.kafka.common.network.Tls13SelectorTest" time="2.866"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
